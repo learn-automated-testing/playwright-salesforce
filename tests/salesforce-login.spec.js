@@ -8,6 +8,10 @@ config();
 
 let jsonData = ""; // npx playwright test salesforce-login.spec.js --project=chromium
 
+let loginPage;
+let setup;
+let overview;
+
 
 test.describe('Login functionality', ()=> {
     test.beforeEach(async ({page}) => {
@@ -21,13 +25,14 @@ test.describe('Login functionality', ()=> {
         const url = "https://login.salesforce.com/?locale=nl";
 
         await expect(url).toContain('login.salesforce');
+
+        loginPage = new LoginPage(page);
+        setup = new Setup(page);
+        overview = new Overview(page);
       });
 
     
     test('Login', async ({ page }) => {
-
-        const loginPage = new LoginPage(page);
-        const setup = new Setup(page);
 
         // await page.goto("https://login.salesforce.com/?locale=nl"); 
     
@@ -59,11 +64,6 @@ test.describe('Login functionality', ()=> {
 
     test("Logging out", async ({page}) => {
 
-        const loginPage = new LoginPage(page);
-        const setup = new Setup(page);
-        const overview = new Overview(page);
-
-
         // await page.goto("https://login.salesforce.com/?locale=nl"); 
     
         // Expect a title "to contain" a substring.
@@ -94,8 +94,6 @@ test.describe('Login functionality', ()=> {
 
 
       test("Logging in with invalid credentials - Invalid password", async ({page}) => {
-
-        const loginPage = new LoginPage(page);
     
         // Actual login of Salseforce trial
         await loginPage.login_Salesforce(
@@ -112,8 +110,6 @@ test.describe('Login functionality', ()=> {
       });
     
       test("Logging in with invalid credentials - Invalid email", async ({page}) => {
-
-        const loginPage = new LoginPage(page);
         
         // Actual login of Salseforce trial
         await loginPage.login_Salesforce(
