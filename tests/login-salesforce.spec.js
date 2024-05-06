@@ -6,7 +6,7 @@ import fs from "fs-extra";
 import { config } from 'dotenv';
 config();
 
-let jsonData = ""; // npx playwright test salesforce-login.spec.js --project=chromium
+let jsonData = ""; // npx playwright test login-salesforce.spec.js --project=chromium
 
 let loginPage;
 let setup;

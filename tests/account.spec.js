@@ -1,69 +1,69 @@
-import LogIn from "../pageobjects/login.page.js";
-import Setup from "../pageobjects/setup.page.js";
-import Overview from "../pageobjects/overview.page.js";
-import Account from "../pageobjects/accounts.page.js";
-import DeleteAccount from "./deleteAccount.js";
-import { fill_In_Combo } from "../functions/functions.js";
+import LoginPage from "../pages/login.page.js";
+import Setup from "../pages/setup.page.js";
+import Overview from "../pages/overview.page.js";
+import Account from "../pages/accounts.page.js";
+import DeleteAccount from "./delete-account.js";
+import { fill_In_Combo } from "./functions/functions.js";
 //import { v4 as uuidv4 } from 'uuid';
 import fs from "fs-extra";
 
 let jsonData = "";
 
+let loginPage;
+let setup;
+let overview;
+let account;
+let deleteAccount;
+
 describe("Testing the accounts functionality", () => {
-  //let accountName1;
+    test.beforeEach(async ({page}) => {
+      // Load in the testdat.json file
+      jsonData = await fs.readJson("./testdata.json");
 
-  before(async () => {
-    jsonData = await fs.readJson("./testdata.json");
-    
-    //const uniqueSuffix = uuidv4();
-    // const browserName = browser.capabilities.browserName;
-    // accountName1 = `${jsonData.accounts.input.account1}_${browserName}}`; //_${uniqueSuffix}
+      loginPage = new LoginPage(page);
+      setup = new Setup(page);
+      overview = new Overview(page);
+      account = new Account(page);
+      deleteAccount = new DeleteAccount(page);
+  
+      // Navigate to the website
+      await page.goto("https://login.salesforce.com/?locale=nl");
+      
+      // Assertion on the URL
+      const url = "https://login.salesforce.com/?locale=nl";
 
+      await expect(url).toContain('login.salesforce');
 
-    //Maximize the browser window for running UI
-    // await browser.maximizeWindow();
-    
-    
-    // Navigate to the website
-    await browser.url("/");
-    // Assertion on the URL
-    await expect(browser).toHaveUrlContaining('login.salesforce');
+      await deleteAccount.initialize()
 
-    await DeleteAccount.initialize()
-
-    await DeleteAccount.deleteAccounts()
+      await deleteAccount.deleteAccounts()
 
   });
 
   it("Creating an account", async () => {
 
 
-    // Navigate to the website
-    await browser.url("/");
-    // Assertion on the URL
-    await expect(browser).toHaveUrlContaining('login.salesforce');
-
     // Actual login of Salseforce trial
-    await LogIn.login_Salesforce(
+    await loginPage.login_Salesforce(
       process.env.SALESFORCE_USERNAME,
       process.env.SALESFORCE_PASSWORD
     );
 
     // Click on the App Launcher
-    await Setup.click_AppLauncher();
+    await setup.click_AppLauncher();
     
     // Click on Service
-    await Setup.click_Service();
+    await setup.click_Service();
 
     // Clicking on the Accounts button
-    await Overview.click_AccountsButton();
+    await overview.click_AccountsButton();
 
     // Click the New button to create a new account
-    await Account.click_NewButton();
+    await account.click_NewButton();
 
     // Fill in the new account's details
     // Filling in details not inside of a (combobox) dropdown menu
-    await Account.fill_In_Accounts_Information(
+    await account.fill_In_Accounts_Information(
       jsonData.accounts.input.account1 + "_" + browser.capabilities.browserName,
       jsonData.accounts.input.accountNumber,
       jsonData.accounts.input.accountSite,
@@ -111,7 +111,7 @@ describe("Testing the accounts functionality", () => {
     // Fill in the address information
     // There are two types of addresses: BILLING ADDRESS and SHIPPING ADDRESS
     // Here the BILLING ADDRESS is requiered
-    await Account.fill_In_AddressInformation(
+    await account.fill_In_AddressInformation(
       jsonData.accounts.billingAddress.billingAddress,
       jsonData.accounts.billingAddress.address,
       jsonData.accounts.billingAddress.postalCode,
@@ -123,7 +123,7 @@ describe("Testing the accounts functionality", () => {
     // Fill in the address information
     // There are two types of addresses: BILLING ADDRESS and SHIPPING ADDRESS
     // Here the SHIPPING ADDRESS is requiered
-    await Account.fill_In_AddressInformation(
+    await account.fill_In_AddressInformation(
       jsonData.accounts.shippingAddress.shippingAddress,
       jsonData.accounts.shippingAddress.address,
       jsonData.accounts.shippingAddress.postalCode,
@@ -166,25 +166,25 @@ describe("Testing the accounts functionality", () => {
 
     // Fill in the new account's additional information
     // Filling in details not inside of a (combobox) dropdown menu
-    await Account.fill_In_additionalInformation(
+    await account.fill_In_additionalInformation(
       jsonData.accounts.input.numberOfLocations,
       jsonData.accounts.input.slaSerialNumber
     );
 
     // Fill in a description of the new account
-    await Account.fill_In_A_Description(
+    await account.fill_In_A_Description(
       jsonData.accounts.input.accountsDescription
     )
 
 
     // Click the Save buton
-    await Account.click_SaveButton();
+    await account.click_SaveButton();
 
-    const similarRecordWarning = await $('[title="Close error dialog"]');
+    const similarRecordWarning = await page.locator('[title="Close error dialog"]');
 
-    if(await similarRecordWarning.isDisplayed()) {
+    if(await similarRecordWarning.toBeVisible()) {
       await similarRecordWarning.click();
-      await Account.click_SaveButton();
+      await account.click_SaveButton();
     }
   });
 
@@ -192,12 +192,12 @@ describe("Testing the accounts functionality", () => {
   it("Deleting an account", async () => {
 
     // Click on the Home button
-    await Overview.click_HomeButton();
+    await overview.click_HomeButton();
     
     // Click on the Actions button
-    await Overview.click_AccountsButton();
+    await overview.click_AccountsButton();
 
-    await Account.deleteExistingAccounts(
+    await account.deleteExistingAccounts(
       jsonData.accounts.input.account1);
 
 
