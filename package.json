@@ -1,0 +1,25 @@
+{
+  "name": "playwright",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:demo": "playwright test demo-todo-app.spec.js",
+    "login-sf": "playwright test salesforce-login.spec.js --headed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.43.1",
+    "@types/node": "^20.12.7",
+    "chalk": "^5.3.0",
+    "dotenv": "^16.4.5",
+    "fs-extra": "^11.2.0",
+    "uuid": "^9.0.1"
+  },
+  "dependencies": {
+    "node": "^22.0.0"
+  }
+}
