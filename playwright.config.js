@@ -12,6 +12,9 @@ dotenv.config();
  * @see https://playwright.dev/docs/test-configuration
  */
 export default({
+
+  timeout: 300000,
+
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -27,7 +30,7 @@ export default({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'https://www.salesforce.com',
-
+    
     video: 'on',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */

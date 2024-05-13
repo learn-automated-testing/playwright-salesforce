@@ -1,3 +1,4 @@
+import {expect } from '@playwright/test';
 import chalk from 'chalk';
 import { config } from 'dotenv';
 config();
@@ -26,12 +27,12 @@ class Account {
   };
 
 
-  async deleteExistingAccounts(...nameAccounts) { 
+  async deleteExistingAccounts(page, ...nameAccounts) { 
 
     for (const nameAccount of nameAccounts) {
       try {
         const accountSelector = `a[title="${nameAccount}"]`;
-        const account = await this.page.waitForSelector(accountSelector, { timeout: 2000 });
+        const account = await expect(page.locator(accountSelector, { timeout: 2000 })).toBeVisible();
   
         if (account) {
            
@@ -69,7 +70,7 @@ class Account {
   async click_ActionsButton() {
   
     // await this.fillactionsButton().waitForClickable();
-    await this.fillactionsButton.click();
+    await this.actionsButton.click();
   }
 
   async click_DeleteAccountButton() {
@@ -157,4 +158,4 @@ class Account {
   }
 
 }
-export default Account();
+export default Account;

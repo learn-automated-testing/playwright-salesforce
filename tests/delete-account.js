@@ -39,4 +39,4 @@ class DeleteAccount {
     }
 }
 
-export default DeleteAccount; // Verwijder de oproep naar de constructor hier
+export default DeleteAccount; 

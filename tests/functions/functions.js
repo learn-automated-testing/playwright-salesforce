@@ -1,4 +1,4 @@
-export async function fill_In_Combo(label, typeOfAccount) {
+async function fill_In_Combo(page, label, typeOfAccount) {
     
     let type = await page.locator(`//label[text()[contains(.,"${label}")]]/../div/lightning-base-combobox/div//button`);
 
@@ -16,3 +16,5 @@ export async function fill_In_Combo(label, typeOfAccount) {
 }
 
 // $('//label[text()[contains(.,"Type")]]/../div/lightning-base-combobox/div//button').click()
+
+export { fill_In_Combo }

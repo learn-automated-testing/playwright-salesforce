@@ -14,7 +14,6 @@ class Setup {
     //   await this.waitForDisplayed();
     //   await this.waitForClickable();
     //   await this.moveTo();
-      await this.applauncher.hover(); 
       await this.applauncher.click();
     }
   

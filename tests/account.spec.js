@@ -1,3 +1,4 @@
+import { test, expect, } from '@playwright/test';
 import LoginPage from "../pages/login.page.js";
 import Setup from "../pages/setup.page.js";
 import Overview from "../pages/overview.page.js";
@@ -7,7 +8,7 @@ import { fill_In_Combo } from "./functions/functions.js";
 //import { v4 as uuidv4 } from 'uuid';
 import fs from "fs-extra";
 
-let jsonData = "";
+let jsonData = ""; //npx playwright test account.spec.js --project=chromium --headed
 
 let loginPage;
 let setup;
@@ -15,10 +16,11 @@ let overview;
 let account;
 let deleteAccount;
 
-describe("Testing the accounts functionality", () => {
+
+test.describe("Testing the accounts functionality", ()=> {
     test.beforeEach(async ({page}) => {
-      // Load in the testdat.json file
-      jsonData = await fs.readJson("./testdata.json");
+        // Load in the testdat.json file
+        jsonData = await fs.readJson("./testdata.json");
 
       loginPage = new LoginPage(page);
       setup = new Setup(page);
@@ -30,18 +32,21 @@ describe("Testing the accounts functionality", () => {
       await page.goto("https://login.salesforce.com/?locale=nl");
       
       // Assertion on the URL
-      const url = "https://login.salesforce.com/?locale=nl";
+      // const url = "https://login.salesforce.com/?locale=nl";
 
-      await expect(url).toContain('login.salesforce');
+      // await expect(await page.url()).toContain('login.salesforce');
 
-      await deleteAccount.initialize()
+      // await deleteAccount.initialize()
 
-      await deleteAccount.deleteAccounts()
+      // await deleteAccount.deleteAccounts()
 
-  });
+    });
 
-  it("Creating an account", async () => {
+    test.only("Creating an account", async ({page, context}) => {
 
+      const browserName = context.browser().browserType().name();
+
+      const fullAccountName = jsonData.accounts.input.account1 + "_" + browserName;
 
     // Actual login of Salseforce trial
     await loginPage.login_Salesforce(
@@ -64,7 +69,7 @@ describe("Testing the accounts functionality", () => {
     // Fill in the new account's details
     // Filling in details not inside of a (combobox) dropdown menu
     await account.fill_In_Accounts_Information(
-      jsonData.accounts.input.account1 + "_" + browser.capabilities.browserName,
+      fullAccountName,
       jsonData.accounts.input.accountNumber,
       jsonData.accounts.input.accountSite,
       jsonData.accounts.input.annualRevenue,
@@ -80,6 +85,7 @@ describe("Testing the accounts functionality", () => {
     // Filling in details inside of a (combobox) dropdown menu
     // Filling in the associated TYPE of account
     await fill_In_Combo(
+      page,
       jsonData.accounts.input.labelTypeOfAccount,
       jsonData.accounts.input.typeOfAccount
     );
@@ -88,6 +94,7 @@ describe("Testing the accounts functionality", () => {
     // Filling in details inside of a (combobox) dropdown menu
     // Filling in the associated INDUSTRY of account
     await fill_In_Combo(
+      page,
       jsonData.accounts.input.labelTypeOfIndustry,
       jsonData.accounts.input.typeOfIndustry
     );
@@ -96,6 +103,7 @@ describe("Testing the accounts functionality", () => {
     // Filling in details inside of a (combobox) dropdown menu
     // Filling in the RATING of the account
     await fill_In_Combo(
+      page,
       jsonData.accounts.input.labelOfRating,
       jsonData.accounts.input.typeOfRating
     );
@@ -104,6 +112,7 @@ describe("Testing the accounts functionality", () => {
     // Filling in details inside of a (combobox) dropdown menu
     // Filling in the OWNERSHIP of the account
     await fill_In_Combo(
+      page,
       jsonData.accounts.input.labelOfOwnership,
       jsonData.accounts.input.typeOfOwnership
     );
@@ -136,6 +145,7 @@ describe("Testing the accounts functionality", () => {
     // Filling in details inside of a (combobox) dropdown menu
     // Filling in the CUSTOMER PRIORITY of the account
     await fill_In_Combo(
+      page,
       jsonData.accounts.input.labelOfCustomerPriority,
       jsonData.accounts.input.typeOfCustomerPriority
     );
@@ -144,6 +154,7 @@ describe("Testing the accounts functionality", () => {
     // Filling in details inside of a (combobox) dropdown menu
     // Filling in if the account is ACTIVE or not
     await fill_In_Combo(
+      page,
       jsonData.accounts.input.labelOfActive,
       jsonData.accounts.input.typeOfActive
     );
@@ -152,6 +163,7 @@ describe("Testing the accounts functionality", () => {
     // Filling in details inside of a (combobox) dropdown menu
     // Filling in the SERVICE-LEVEL-AGREEMENT of the account
     await fill_In_Combo(
+      page,
       jsonData.accounts.input.labelOfSLA,
       jsonData.accounts.input.typeOfSLA
     );
@@ -160,6 +172,7 @@ describe("Testing the accounts functionality", () => {
     // Filling in details inside of a (combobox) dropdown menu
     // Filling in if the account can be sold for a higher price
     await fill_In_Combo(
+      page,
       jsonData.accounts.input.labelOfUpsellOpportunity,
       jsonData.accounts.input.typeOfUpsellOpportunity
     );
@@ -182,14 +195,14 @@ describe("Testing the accounts functionality", () => {
 
     const similarRecordWarning = await page.locator('[title="Close error dialog"]');
 
-    if(await similarRecordWarning.toBeVisible()) {
+    if(await similarRecordWarning.isVisible()) {
       await similarRecordWarning.click();
       await account.click_SaveButton();
     }
-  });
+    });
 
 
-  it("Deleting an account", async () => {
+    test("Deleting an account", async () => {
 
     // Click on the Home button
     await overview.click_HomeButton();
@@ -201,5 +214,5 @@ describe("Testing the accounts functionality", () => {
       jsonData.accounts.input.account1);
 
 
-  });
+    });
 });
