@@ -15,11 +15,10 @@ jobs:
         node-version: lts/*
     - name: Install dependencies
       run: npm ci
-    - name: Install Newman
-      run: npm install -g newman
-    - name: Run Newman tests
-      # Replace 'collection.json' with your Postman collection file path
-      # Replace 'environment.json' with your environment file path if necessary
+    - name: Install Newman locally
+      run: npm install newman
+    - name: Run Newman script
+      # Ensure this script is adjusted if it needs specific handling of Newman
       run: node ./tests/postman/removeaccounts.js
     - name: Install Playwright Browsers
       # Install only Chromium and its dependencies
