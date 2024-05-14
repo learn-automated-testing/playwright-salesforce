@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "entry:test" : "node tests/postman/removeaccounts.js",
+    "entry:test" : "node ./tests/postman/removeaccounts.js",
     "test:demo": "playwright test demo-todo-app.spec.js",
     "login-sf": "playwright test salesforce-login.spec.js --headed"
   },

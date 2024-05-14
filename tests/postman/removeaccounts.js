@@ -1,8 +1,19 @@
 
 import newman from 'newman';
-import { config } from 'dotenv';
-config();
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+
+const result = dotenv.config();
+if (result.error) {
+  throw result.error;
+}
+console.log(result.parsed); 
+console.log('Client ID:', process.env.SF_CLIENT_ID);
+console.log('Client Secret:', process.env.SF_CLIENT_SECRET);
 
 
 
@@ -23,7 +34,7 @@ async function runNewman() {
     const environment = await createNewmanEnvironment()
 console.log(environment)
 newman.run({
-    collection: './Salesforceapiremoveaccounts.json',
+    collection: './tests/postman/Salesforceapiremoveaccounts.json',
     environment: environment,
     reporters: ['cli'] // Only CLI output for reporting
 }, (err, summary) => {
