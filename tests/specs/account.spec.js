@@ -34,25 +34,26 @@ test.describe("Testing the accounts functionality", ()=> {
 
       expect(url).toContain('login.salesforce');
 
-    });
 
-    test("Creating an account", async ({page, context}) => {
-
-      const browserName = context.browser().browserType().name();
-
-      const fullAccountName = jsonData.accounts.input.account1 + "_" + browserName;
-
-    // Actual login of Salseforce trial
+      // Actual login of Salseforce trial
     await loginPage.login_Salesforce(
       process.env.SALESFORCE_USERNAME,
       process.env.SALESFORCE_PASSWORD
     );
 
-    // Click on the App Launcher
-    await setup.click_AppLauncher();
+     // Click on the App Launcher
+     await setup.click_AppLauncher();
     
-    // Click on Service
-    await setup.click_Service();
+     // Click on Service
+     await setup.click_Service();
+
+    });
+
+    test.skip("Creating an account", async ({page, context}) => {
+
+      const browserName = context.browser().browserType().name();
+
+      const fullAccountName = jsonData.accounts.input.account1 + "_" + browserName;
 
     // Clicking on the Accounts button
     await overview.click_AccountsButton();
@@ -196,23 +197,11 @@ test.describe("Testing the accounts functionality", ()=> {
     });
 
 
-    test.skip("Deleting an account", async ({context}) => {
+    test("Deleting an account", async ({context}) => {
 
       const browserName = context.browser().browserType().name();
 
       const fullAccountName = jsonData.accounts.input.account1 + "_" + browserName;
-
-      // Actual login of Salseforce trial
-    await loginPage.login_Salesforce(
-      process.env.SALESFORCE_USERNAME,
-      process.env.SALESFORCE_PASSWORD
-    );
-
-    // Click on the App Launcher
-    await setup.click_AppLauncher();
-    
-    // Click on Service
-    await setup.click_Service();
 
     // Clicking on the Accounts button
     await overview.click_AccountsButton();
