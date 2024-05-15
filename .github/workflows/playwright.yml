@@ -1,0 +1,34 @@
+name: Playwright and Newman Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Newman locally
+      run: npm install newman
+    - name: Run Newman script
+      # Ensure this script is adjusted if it needs specific handling of Newman
+      run: node ./tests/postman/removeaccounts.js
+    - name: Install Playwright Browsers
+      # Install only Chromium and its dependencies
+      run: npx playwright install chromium --with-deps
+    - name: Run Playwright tests
+      # Configure Playwright to use 2 workers
+      run: npx playwright test --project=chromium --workers=2
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30

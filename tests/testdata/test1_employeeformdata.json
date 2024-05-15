@@ -1,0 +1,12 @@
+[
+    {
+        "First Name": { "value": "John", "type": "text" },
+        "Last Name": { "value": "Engineering", "type": "text" },
+        "Job Title": { "value": "Male", "type": "text" }
+    },
+    {
+        "First Name": { "value": "Jane", "type": "text" },
+        "Last Name": { "value": "Marketing", "type": "text" },
+        "Job Title": { "value": "Female", "type": "text" }
+    }
+]
