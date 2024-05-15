@@ -1,0 +1,13 @@
+{
+    "loggingIn": {
+        "login": {
+          "invalidPassword": "InvalidPassword",
+          "invalidEmail": "ralphvanderhorst@learnautomatedtestingg.com"
+        },
+        "output": {
+          "quarterlyPerformance": "Quarterly Performance",
+          "inloggen": "Log In",
+          "loginError": "Controleer uw gebruikersnaam en wachtwoord. Als u nog steeds niet kunt inloggen, neemt u contact op met uw Salesforce-beheerder." 
+      }
+    }
+}

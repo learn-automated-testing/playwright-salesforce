@@ -3,9 +3,7 @@ import LoginPage from "../pages/login.page.js";
 import Setup from "../pages/setup.page.js";
 import Overview from "../pages/overview.page.js";
 import Account from "../pages/accounts.page.js";
-import DeleteAccount from "./delete-account.js";
-import { fill_In_Combo } from "./functions/functions.js";
-//import { v4 as uuidv4 } from 'uuid';
+import { fill_In_Combo } from "../functions/functions.js";
 import fs from "fs-extra";
 
 let jsonData = ""; //npx playwright test account.spec.js --project=chromium --headed
@@ -14,35 +12,31 @@ let loginPage;
 let setup;
 let overview;
 let account;
-let deleteAccount;
+
 
 
 test.describe("Testing the accounts functionality", ()=> {
     test.beforeEach(async ({page}) => {
+        
         // Load in the testdat.json file
-        jsonData = await fs.readJson("./testdata.json");
+        jsonData = await fs.readJson("./tests/testdata/testdata-accounts.json");
 
       loginPage = new LoginPage(page);
       setup = new Setup(page);
       overview = new Overview(page);
       account = new Account(page);
-      deleteAccount = new DeleteAccount(page);
   
       // Navigate to the website
       await page.goto("https://login.salesforce.com/?locale=nl");
       
       // Assertion on the URL
-      // const url = "https://login.salesforce.com/?locale=nl";
+      const url = "https://login.salesforce.com/?locale=nl";
 
-      // await expect(await page.url()).toContain('login.salesforce');
-
-      // await deleteAccount.initialize()
-
-      // await deleteAccount.deleteAccounts()
+      expect(url).toContain('login.salesforce');
 
     });
 
-    test.only("Creating an account", async ({page, context}) => {
+    test("Creating an account", async ({page, context}) => {
 
       const browserName = context.browser().browserType().name();
 
@@ -135,8 +129,8 @@ test.describe("Testing the accounts functionality", ()=> {
     await account.fill_In_AddressInformation(
       jsonData.accounts.shippingAddress.shippingAddress,
       jsonData.accounts.shippingAddress.address,
-      jsonData.accounts.shippingAddress.postalCode,
-      jsonData.accounts.shippingAddress.city,
+      // jsonData.accounts.shippingAddress.postalCode,
+      // jsonData.accounts.shippingAddress.city,
       jsonData.accounts.shippingAddress.province,
       jsonData.accounts.shippingAddress.country
     );
@@ -193,7 +187,7 @@ test.describe("Testing the accounts functionality", ()=> {
     // Click the Save buton
     await account.click_SaveButton();
 
-    const similarRecordWarning = await page.locator('[title="Close error dialog"]');
+    const similarRecordWarning = page.locator('[title="Close error dialog"]');
 
     if(await similarRecordWarning.isVisible()) {
       await similarRecordWarning.click();
@@ -202,16 +196,30 @@ test.describe("Testing the accounts functionality", ()=> {
     });
 
 
-    test("Deleting an account", async () => {
+    test.skip("Deleting an account", async ({context}) => {
 
-    // Click on the Home button
-    await overview.click_HomeButton();
+      const browserName = context.browser().browserType().name();
+
+      const fullAccountName = jsonData.accounts.input.account1 + "_" + browserName;
+
+      // Actual login of Salseforce trial
+    await loginPage.login_Salesforce(
+      process.env.SALESFORCE_USERNAME,
+      process.env.SALESFORCE_PASSWORD
+    );
+
+    // Click on the App Launcher
+    await setup.click_AppLauncher();
     
-    // Click on the Actions button
+    // Click on Service
+    await setup.click_Service();
+
+    // Clicking on the Accounts button
     await overview.click_AccountsButton();
 
+    // Delete the account
     await account.deleteExistingAccounts(
-      jsonData.accounts.input.account1);
+      fullAccountName);
 
 
     });

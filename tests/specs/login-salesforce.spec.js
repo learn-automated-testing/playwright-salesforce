@@ -16,7 +16,7 @@ let overview;
 test.describe('Login functionality', ()=> {
     test.beforeEach(async ({page}) => {
         // Load in the testdat.json file
-        jsonData = await fs.readJson("./testdata.json");
+        jsonData = await fs.readJson("./tests/testdata/testdata-login.json");
     
         // Navigate to the website
         await page.goto("https://login.salesforce.com/?locale=nl");
@@ -24,7 +24,7 @@ test.describe('Login functionality', ()=> {
         // Assertion on the URL
         const url = "https://login.salesforce.com/?locale=nl";
 
-        await expect(url).toContain('login.salesforce');
+        expect(url).toContain('login.salesforce');
 
         loginPage = new LoginPage(page);
         setup = new Setup(page);
@@ -34,7 +34,6 @@ test.describe('Login functionality', ()=> {
     
     test('Login', async ({ page }) => {
 
-        // await page.goto("https://login.salesforce.com/?locale=nl"); 
     
         // Expect a title "to contain" a substring.
         await expect(page).toHaveTitle(/Inloggen/);
@@ -63,8 +62,6 @@ test.describe('Login functionality', ()=> {
 
 
     test("Logging out", async ({page}) => {
-
-        // await page.goto("https://login.salesforce.com/?locale=nl"); 
     
         // Expect a title "to contain" a substring.
         await expect(page).toHaveTitle(/Inloggen/);
@@ -84,7 +81,7 @@ test.describe('Login functionality', ()=> {
         await setup.click_LogoutButton();
         
         // Verify the succesful logout
-        const inloggen = await page.locator('[id="Login"]');
+        const inloggen = page.locator('[id="Login"]');
     
         await expect(inloggen).toHaveText(
           jsonData.loggingIn.output.inloggen
@@ -101,7 +98,7 @@ test.describe('Login functionality', ()=> {
           jsonData.loggingIn.login.invalidPassword
          );
     
-        const error = await page.locator('[id="error"]')
+        const error = page.locator('[id="error"]')
         
         await expect(error).toHaveText(
           jsonData.loggingIn.output.loginError
@@ -117,7 +114,7 @@ test.describe('Login functionality', ()=> {
           process.env.SALESFORCE_PASSWORD
          );
     
-        const error = await page.locator('[id="error"]') //Please check your username and password. If you still can't log in, contact your Salesforce administrator.
+        const error = page.locator('[id="error"]') //Please check your username and password. If you still can't log in, contact your Salesforce administrator.
     
         await expect(error).toHaveText(
           jsonData.loggingIn.output.loginError

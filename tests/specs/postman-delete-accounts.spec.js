@@ -1,5 +1,5 @@
 import newman from 'newman';
-import collection from './salesforceauth.postman_collection.json' assert { type: 'json' };
+import collection from '../testdata/salesforceauth.postman_collection.json' assert { type: 'json' };
 
 newman.run({
     collection: collection,

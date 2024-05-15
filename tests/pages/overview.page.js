@@ -9,11 +9,11 @@ class Overview {
     };
 
 
-    async click_HomeButton() {
+    // async click_HomeButton() {
 
-        let test = await page.locator('[href="/lightning/page/home"]');       
-        await test.click();
-    }
+    //     let test = await page.locator('[href="/lightning/page/home"]');       
+    //     await test.click();
+    // }
     
     async click_AccountsButton() {
 
