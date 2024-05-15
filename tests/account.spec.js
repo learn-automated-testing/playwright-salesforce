@@ -123,8 +123,8 @@ test.describe("Testing the accounts functionality", ()=> {
     await account.fill_In_AddressInformation(
       jsonData.accounts.billingAddress.billingAddress,
       jsonData.accounts.billingAddress.address,
-      jsonData.accounts.billingAddress.postalCode,
-      jsonData.accounts.billingAddress.city,
+      // jsonData.accounts.billingAddress.postalCode,
+      // jsonData.accounts.billingAddress.city,
       jsonData.accounts.billingAddress.province,
       jsonData.accounts.billingAddress.country
     );

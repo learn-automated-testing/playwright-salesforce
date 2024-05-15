@@ -111,20 +111,20 @@ class Account {
   async fill_In_AddressInformation(
     typeOfAddress,
     street,
-    postalcode,
-    city,
+    // postalcode,
+    // city,
     provincy,
     country
   ) {
     let street_ = await this.page.locator(
       `//*[contains(@data-target-selection-name, "${typeOfAddress}")]//textarea`
     );
-    let postalCode_ = await this.page.locator(
-      `//*[contains(@data-target-selection-name, "${typeOfAddress}")]//input[@name="postalCode"]`
-    );
-    let city_ = await this.page.locator(
-      `//*[contains(@data-target-selection-name, "${typeOfAddress}")]//input[@name="city"]`
-    );
+    // let postalCode_ = await this.page.locator(
+    //   `//*[contains(@data-target-selection-name, "${typeOfAddress}")]//input[@name="postalCode"]`
+    // );
+    // let city_ = await this.page.locator(
+    //   `//*[contains(@data-target-selection-name, "${typeOfAddress}")]//input[@name="city"]`
+    // );
     let province_ = await this.page.locator(
       `//*[contains(@data-target-selection-name, "${typeOfAddress}")]//input[@name="province"]`
     );
@@ -133,8 +133,8 @@ class Account {
     );
 
     await street_.fill(street);
-    await postalCode_.fill(postalcode);
-    await city_.fill(city);
+    // await postalCode_.fill(postalcode);
+    // await city_.fill(city);
     await province_.fill(provincy);
     await country_.fill(country);
   }

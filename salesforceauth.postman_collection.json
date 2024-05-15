@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "e5056d83-351d-409b-ade3-45595112498b",
+		"name": "Salesforceauth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29750971"
+	},
+	"item": [
+		{
+			"name": "GetAuthtoaken",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "grant_type",
+							"value": "client_credentials",
+							"type": "text"
+						},
+						{
+							"key": "client_id",
+							"value": "3MVG98Gq2O8Po4ZmpGm16AXnMtZXHoGEd0ckEtN04Li0DE1Oku8KMF..vqzu8xHZNcm5.vmrC_GEjKY_VP9Hd",
+							"type": "text"
+						},
+						{
+							"key": "client_secret",
+							"value": "26F7E6D30557798C3EC233CD221B6E449A9A8820C0C960CF48017AD4EB24DD27",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://bsure-digitalbv-dev-ed.develop.my.salesforce.com/services/oauth2/token",
+					"protocol": "https",
+					"host": [
+						"bsure-digitalbv-dev-ed",
+						"develop",
+						"my",
+						"salesforce",
+						"com"
+					],
+					"path": [
+						"services",
+						"oauth2",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://bsure-digitalbv-dev-ed.develop.my.salesforce.com/services/data/v60.0/sobjects/Account/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let responseData = pm.response.json();",
+							"let ids = responseData.recentItems.map(item => item.Id);",
+							"",
+							"pm.collectionVariables.set(\"accountIds\", ids.join(\",\"));",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "00D7R000005GtSn!AQ8AQD7wUiW3TsdF164F7GdsC_I97Qvu3jm2VWxfeT56DBquLjcStUYoe8ihw1az9KrtIf9QoVmVxr1oatI_tpI8dblcZmUa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bsure-digitalbv-dev-ed.develop.my.salesforce.com/services/data/v60.0/sobjects/Account/",
+					"protocol": "https",
+					"host": [
+						"bsure-digitalbv-dev-ed",
+						"develop",
+						"my",
+						"salesforce",
+						"com"
+					],
+					"path": [
+						"services",
+						"data",
+						"v60.0",
+						"sobjects",
+						"Account",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "https://your-instance.salesforce.com/services/data/v60.0/sobjects/Account/{accountId}",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Retrieve the list of IDs and convert it into an array",
+							"let ids = (pm.collectionVariables.get(\"accountIds\") || \"\").split(',');",
+							"",
+							"// Get the next ID to delete",
+							"let currentId = ids.shift();",
+							"",
+							"// Check if there's an ID to process",
+							"if (currentId) {",
+							"    // Set the current account ID for the DELETE URL",
+							"    pm.collectionVariables.set(\"currentAccountId\", currentId.trim());",
+							"",
+							"    // Save the remaining IDs back to the environment",
+							"    pm.collectionVariables.set(\"accountIds\", ids.join(','));",
+							"",
+							"    // Set to run the same request again",
+							"    postman.setNextRequest(pm.info.requestName);",
+							"} else {",
+							"    // No more IDs left, stop the iteration",
+							"    postman.setNextRequest(null);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "00D7R000005GtSn!AQ8AQD7wUiW3TsdF164F7GdsC_I97Qvu3jm2VWxfeT56DBquLjcStUYoe8ihw1az9KrtIf9QoVmVxr1oatI_tpI8dblcZmUa",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://bsure-digitalbv-dev-ed.develop.my.salesforce.com/services/data/v60.0/sobjects/Account/{{currentAccountId}}",
+					"protocol": "https",
+					"host": [
+						"bsure-digitalbv-dev-ed",
+						"develop",
+						"my",
+						"salesforce",
+						"com"
+					],
+					"path": [
+						"services",
+						"data",
+						"v60.0",
+						"sobjects",
+						"Account",
+						"{{currentAccountId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "accountIds",
+			"value": ""
+		},
+		{
+			"key": "currentAccountId",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
