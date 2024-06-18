@@ -23,9 +23,12 @@ jobs:
     - name: Install Playwright Browsers
       # Install only Chromium and its dependencies
       run: npx playwright install chromium --with-deps
-    - name: Run Playwright tests
+    - name: Run Playwright test create account
       # Configure Playwright to use 2 workers
-      run: npx playwright test --project=chromium --workers=2
+      run: npx playwright test ./tests/specs/account.spec.js -g "Create an account"  --headed --project=chromium
+    - name: Run Playwright test delete account
+    # Configure Playwright to use 2 workers
+      run: npx playwright test ./tests/specs/account.spec.js -g "Delete an account"  --headed --project=chromium
     - uses: actions/upload-artifact@v4
       if: always()
       with:

@@ -2,7 +2,7 @@ class Setup {
    constructor(page) {
 
     this.page = page;
-    this.applauncher = page.locator('[data-aura-class$="AppLauncherHeader"]');
+    this.applauncher = page.locator('[class*="appLauncher"]');
     this.service = page.locator('//p[text()="Service"]');
     this.viewProfileButton = page.locator('[class*="userProfile-button"]');
     this.logoutButton = page.locator('[href="/secur/logout.jsp"]');
@@ -10,9 +10,9 @@ class Setup {
   
     async click_AppLauncher() {
   
-    //   await this.waitForExist();
-    //   await this.waitForDisplayed();
-    //   await this.waitForClickable();
+  
+      await this.applauncher.waitFor();
+      
     //   await this.moveTo();
       await this.applauncher.click();
     }

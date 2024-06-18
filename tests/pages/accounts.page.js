@@ -26,35 +26,42 @@ class Account {
     this.confirmDeleteAccountButton = page.locator('[class="modal-footer slds-modal__footer"] [title="Delete"]')
   };
 
+  async deleteExistingAccount(nameAccount) {
+    try {
+      console.log(chalk.blue(`Attempting to delete account: ${nameAccount}`));
+      const accountSelector = `a[title="${nameAccount}"]`;
+      await this.page.waitForSelector(accountSelector, { visible: true });
+      const account = this.page.locator(accountSelector).first();
 
-  async deleteExistingAccounts(page, ...nameAccounts) { 
+      // Log the locator to debug
+      console.log(chalk.blue(`Locator for the account: ${accountSelector}`));
+      console.log(await account.count())
+  
+      if (await account.isVisible()) {
+        console.log(chalk.green(`Account found: ${nameAccount}`));
+        await account.click();
 
-    for (const nameAccount of nameAccounts) {
-      try {
-        const accountSelector = `a[title="${nameAccount}"]`;
-        const account = await expect(page.locator(accountSelector, { timeout: 2000 })).toBeVisible();
-  
-        if (account) {
-           
-        //   await this.fillactionsButton().waitForClickable();
-          await this.actionsButton.click();
-      
-        //   await this.filldeleteAccountButton().waitForClickable();
-          await this.deleteAccountButton.click();
-  
-        //   await this.fillconfirmDeleteAccountButton().waitForClickable();
-          await this.confirmDeleteAccountButton.click();
+        console.log(chalk.blue('Clicking actions button...'));
+        await this.actionsButton.first().click();
 
-          const x_button = await page.locator('[title="Close"]')
-          await x_button.click();
-  
-          console.log(chalk.green.bold(`Account deletion successful for ${nameAccount}.`));
-        } 
-      } catch (error) {
-        console.error(chalk.yellow.bold(`No such account with name: ${nameAccount}:`, error));
+        console.log(chalk.blue('Clicking delete account button...'));
+        await this.deleteAccountButton.first().click();
+
+        console.log(chalk.blue('Clicking confirm delete account button...'));
+        await this.confirmDeleteAccountButton.click();
+
+      //  const xButton = await this.page.locator('[title="Close"]');
+       // await xButton.click();
+
+        console.log(chalk.green.bold(`Account deletion successful for ${nameAccount}.`));
+      } else {
+        console.log(chalk.yellow.bold(`Account not found: ${nameAccount}`));
       }
+    } catch (error) {
+      console.error(chalk.red.bold(`Failed to delete account: ${nameAccount}:`, error));
     }
   }
+
 
   
   
