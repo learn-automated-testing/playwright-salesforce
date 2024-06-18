@@ -9,8 +9,12 @@ const __dirname = path.dirname(__filename);
 
 const result = dotenv.config();
 if (result.error) {
-  throw result.error;
-}
+    if (!process.env.SF_CLIENT_ID || !process.env.SF_CLIENT_SECRET) {
+        throw new Error('Missing required environment variables SF_CLIENT_ID or SF_CLIENT_SECRET');
+      }
+    else {
+        console.log(result.parsed); 
+  
 console.log(result.parsed); 
 console.log('Client ID:', process.env.SF_CLIENT_ID);
 console.log('Client Secret:', process.env.SF_CLIENT_SECRET);
