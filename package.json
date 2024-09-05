@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "entry:test" : "node ./tests/postman/removeaccounts.js",
+    "entry:test": "node ./tests/postman/removeaccounts.js",
     "test:demo": "playwright test demo-todo-app.spec.js",
     "login-sf": "playwright test salesforce-login.spec.js --headed"
   },
@@ -13,16 +13,17 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.43.1",
-    "@types/node": "^20.12.7",
+    "@playwright/test": "^1.46.1",
+    "@types/node": "^22.5.4",
     "chalk": "^5.3.0",
     "dotenv": "^16.4.5",
-    "faker": "^5.5.3",
+    "faker": "^6.6.6",
     "fs-extra": "^11.2.0",
-    "newman": "^5.3.2",
-    "uuid": "^9.0.1"
+    "newman": "^6.2.1",
+    "npm-check-updates": "^17.1.1",
+    "uuid": "^10.0.0"
   },
   "dependencies": {
-    "node": "^22.0.0"
+    "node": "^22.8.0"
   }
 }
