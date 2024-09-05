@@ -1,10 +1,9 @@
 import {expect } from '@playwright/test';
 import chalk from 'chalk';
 import { config } from 'dotenv';
-import Overview from './overview.page';
 config();
 
-const overviewInstance = new Overview();
+
 
 class Account {
   constructor(page) {
@@ -27,16 +26,17 @@ class Account {
     this.actionsButton = page.locator('[class="forceVirtualActionMarker forceVirtualAction"]')
     this.deleteAccountButton = page.locator('[data-target-selection-name*="StandardButton.Account.Delete"]')
     this.confirmDeleteAccountButton = page.locator('[class="modal-footer slds-modal__footer"] [title="Delete"]')
+    this.accountsButton = page.locator('[title="Accounts"]');
   };
 
   async deleteExistingAccount(nameAccount) {
     try {
       console.log(chalk.blue(`Attempting to delete account: ${nameAccount}`));
       const accountSelector = `a[title="${nameAccount}"]`;
-      // const accountName = 'span[title="Account Name"]';
-      // if(!accountName) {
-      //   await overviewInstance.accountsButton.click();
-      // }
+      const accountName = 'span[title="Account Name"]';
+      if(!accountName) {
+        await accountsButton.click();
+      }
       await this.page.waitForSelector(accountSelector, { visible: true });
       const account = this.page.locator(accountSelector).first();
 

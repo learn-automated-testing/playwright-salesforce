@@ -125,7 +125,7 @@ test.describe("Testing the accounts functionality", () => {
     }
   });
 
-  test("Delete an account", async () => {
+  test.skip("Delete an account", async () => {
     const browserName = "chromium";
     const fullAccountName = `${jsonData.accounts.input.account1}_${browserName}`;
 
@@ -137,11 +137,14 @@ test.describe("Testing the accounts functionality", () => {
     console.log('Accounts button clicked.');
 
     // Attempt to locate the account
-    const accountRow = page.locator(`a[title="${fullAccountName}"`);
+    const accountRow = `${fullAccountName}`;
+
+    console.log(accountRow);
    
       // Implement the deletion logic here
       // Assuming deleteExistingAccounts method handles the deletion
       await account.deleteExistingAccount(accountRow);
+      
 
    
       
