@@ -17,9 +17,9 @@
     "@types/node": "^22.5.4",
     "chalk": "^5.3.0",
     "dotenv": "^16.4.5",
-    "faker": "^6.6.6",
+    "faker": "^5.5.3",
     "fs-extra": "^11.2.0",
-    "newman": "^6.2.1",
+    "newman": "^6.2.0",
     "npm-check-updates": "^17.1.1",
     "uuid": "^10.0.0"
   },
