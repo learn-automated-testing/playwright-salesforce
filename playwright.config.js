@@ -10,6 +10,9 @@ dotenv.config();
  */
 export default {
   timeout: 300000, // Set global timeout for all tests
+  expect: {
+    timeout: 10 * 1000,
+  },
 
   testDir: './tests', // Specify the test directory
   fullyParallel: true, // Run tests in parallel

@@ -141,7 +141,7 @@ test.describe("Testing the accounts functionality", () => {
    
       // Implement the deletion logic here
       // Assuming deleteExistingAccounts method handles the deletion
-      await account.deleteExistingAccount(fullAccountName);
+      await account.deleteExistingAccount(accountRow);
 
    
       

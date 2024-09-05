@@ -1,7 +1,10 @@
 import {expect } from '@playwright/test';
 import chalk from 'chalk';
 import { config } from 'dotenv';
+import Overview from './overview.page';
 config();
+
+const overviewInstance = new Overview();
 
 class Account {
   constructor(page) {
@@ -30,6 +33,10 @@ class Account {
     try {
       console.log(chalk.blue(`Attempting to delete account: ${nameAccount}`));
       const accountSelector = `a[title="${nameAccount}"]`;
+      // const accountName = 'span[title="Account Name"]';
+      // if(!accountName) {
+      //   await overviewInstance.accountsButton.click();
+      // }
       await this.page.waitForSelector(accountSelector, { visible: true });
       const account = this.page.locator(accountSelector).first();
 

@@ -10,19 +10,12 @@ class Setup {
   
     async click_AppLauncher() {
   
-  
-      await this.applauncher.waitFor();
-      
-    //   await this.moveTo();
       await this.applauncher.click();
     }
   
     async click_Service() {
-  
-    //   await this.service.waitForExist();
-    //   await this.service.waitForDisplayed();
-    //   await this.service.waitForClickable();
-      await this.service.click();
+
+    await this.service.click();
   }
 
   async click_ViewProfileButton() {

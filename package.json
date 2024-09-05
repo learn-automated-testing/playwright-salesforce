@@ -20,10 +20,8 @@
     "faker": "^5.5.3",
     "fs-extra": "^11.2.0",
     "newman": "^6.2.0",
+    "node": "^22.8.0",
     "npm-check-updates": "^17.1.1",
     "uuid": "^10.0.0"
-  },
-  "dependencies": {
-    "node": "^22.8.0"
   }
 }
