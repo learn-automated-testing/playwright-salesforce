@@ -7,7 +7,7 @@
   "scripts": {
     "entry:test": "node ./tests/postman/removeaccounts.js",
     "test:demo": "playwright test demo-todo-app.spec.js",
-    "login-sf": "SALESFORCE_USERNAME=$SALESFORCE_USERNAME SALESFORCE_PASSWORD=$SALESFORCE_PASSWORD playwright test salesforce-login.spec.js",
+    "login-sf": "SALESFORCE_USERNAME=$SALESFORCE_USERNAME SALESFORCE_PASSWORD=$SALESFORCE_PASSWORD playwright test login-salesforce.spec.js",
     "create-account": "SALESFORCE_USERNAME=$SALESFORCE_USERNAME SALESFORCE_PASSWORD=$SALESFORCE_PASSWORD playwright test account.spec.js"
   },
   "keywords": [],
