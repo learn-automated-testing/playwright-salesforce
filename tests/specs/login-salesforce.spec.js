@@ -32,7 +32,7 @@ test.describe('Login functionality', ()=> {
       });
 
     
-    test('Login', async ({ page }) => {
+    test('Login', async () => {
 
     
         // Expect a title "to contain" a substring.
@@ -90,7 +90,7 @@ test.describe('Login functionality', ()=> {
       });
 
 
-      test("Logging in with invalid credentials - Invalid password", async ({page}) => {
+      test("Logging in with invalid credentials - Invalid password", async () => {
     
         // Actual login of Salseforce trial
         await loginPage.login_Salesforce(
@@ -106,7 +106,7 @@ test.describe('Login functionality', ()=> {
     
       });
     
-      test("Logging in with invalid credentials - Invalid email", async ({page}) => {
+      test("Logging in with invalid credentials - Invalid email", async () => {
         
         // Actual login of Salseforce trial
         await loginPage.login_Salesforce(
