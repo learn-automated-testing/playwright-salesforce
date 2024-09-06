@@ -17,7 +17,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run creating account testfile
+      - name: Install playwright browsers
+        run: npx playwright install
+        
+      - name: Run create account.spec.js file
         run: npm run create-account  
 
 
