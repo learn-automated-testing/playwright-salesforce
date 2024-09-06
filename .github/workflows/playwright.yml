@@ -18,7 +18,7 @@ jobs:
         run: npm install
 
       - name: Run creating account testfile
-        run:  node ./test/account.spec.js   
+        run: npm run create-account  
 
 
       # - name: Run Postman Script to Remove Accounts
