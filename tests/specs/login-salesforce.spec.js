@@ -6,6 +6,8 @@ import fs from "fs-extra";
 import { config } from 'dotenv';
 config();
 
+// add page object back into testcases when un-comment out the string assertions. async ({page}) =>
+
 let jsonData = ""; // npx playwright test login-salesforce.spec.js --project=chromium
 
 let loginPage;
