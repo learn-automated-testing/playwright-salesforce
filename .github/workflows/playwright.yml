@@ -55,6 +55,8 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Output environment variables
+      run: env | grep 'SALESFORCE'
     - name: Run Playwright tests
       env:
           SALESFORCE_USERNAME: ${{ secrets.SALESFORCE_USERNAME }}
