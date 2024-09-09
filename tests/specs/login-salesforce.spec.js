@@ -34,15 +34,15 @@ test.describe('Login functionality', ()=> {
       });
 
     
-    test('Login', async () => {
+    test.only('Login', async () => {
 
     
         // Expect a title "to contain" a substring.
         // await expect(page).toHaveTitle(/Inloggen/);
     
         await loginPage.login_Salesforce(
-            process.env.SALESFORCE_USERNAME,
-            process.env.SALESFORCE_PASSWORD
+            // process.env.SALESFORCE_USERNAME,
+            // process.env.SALESFORCE_PASSWORD
         );
     
         // Expect a title "to contain" a substring.
