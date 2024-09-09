@@ -34,7 +34,7 @@ test.describe('Login functionality', ()=> {
       });
 
     
-    test.only('Login', async () => {
+    test('Login', async () => {
 
     
         // Expect a title "to contain" a substring.
@@ -63,66 +63,66 @@ test.describe('Login functionality', ()=> {
     });
 
 
-    test("Logging out", async ({page}) => {
+    // test("Logging out", async ({page}) => {
     
-        // Expect a title "to contain" a substring.
-        // await expect(page).toHaveTitle(/Inloggen/);
+    //     // Expect a title "to contain" a substring.
+    //     // await expect(page).toHaveTitle(/Inloggen/);
     
-        await loginPage.login_Salesforce(
-            process.env.SALESFORCE_USERNAME,
-            process.env.SALESFORCE_PASSWORD
-        );
+    //     await loginPage.login_Salesforce(
+    //         process.env.SALESFORCE_USERNAME,
+    //         process.env.SALESFORCE_PASSWORD
+    //     );
     
-        // Expect a title "to contain" a substring.
-        // await expect(page).toHaveTitle(/Lightning Experience/);
+    //     // Expect a title "to contain" a substring.
+    //     // await expect(page).toHaveTitle(/Lightning Experience/);
     
-        // Click the View Profile button
-        await setup.click_ViewProfileButton();
+    //     // Click the View Profile button
+    //     await setup.click_ViewProfileButton();
     
-        // Select Log Out
-        await setup.click_LogoutButton();
+    //     // Select Log Out
+    //     await setup.click_LogoutButton();
         
-        // Verify the succesful logout
-        // const inloggen = page.locator('[id="Login"]');
+    //     // Verify the succesful logout
+    //     // const inloggen = page.locator('[id="Login"]');
     
-        // await expect(inloggen).toHaveText(
-        //   jsonData.loggingIn.output.inloggen
-        // )
+    //     // await expect(inloggen).toHaveText(
+    //     //   jsonData.loggingIn.output.inloggen
+    //     // )
     
-      });
+    //   });
 
 
-      test("Logging in with invalid credentials - Invalid password", async () => {
+    //   test("Logging in with invalid credentials - Invalid password", async () => {
     
-        // Actual login of Salseforce trial
-        await loginPage.login_Salesforce(
-          process.env.SALESFORCE_USERNAME,
-          jsonData.loggingIn.login.invalidPassword
-         );
+    //     // Actual login of Salseforce trial
+    //     await loginPage.login_Salesforce(
+    //       process.env.SALESFORCE_USERNAME,
+    //       jsonData.loggingIn.login.invalidPassword
+    //      );
     
-        // const error = page.locator('[id="error"]')
+    //     // const error = page.locator('[id="error"]')
         
-        // await expect(error).toHaveText(
-        //   jsonData.loggingIn.output.loginError
-        // )
+    //     // await expect(error).toHaveText(
+    //     //   jsonData.loggingIn.output.loginError
+    //     // )
     
-      });
+    //   });
     
-      test("Logging in with invalid credentials - Invalid email", async () => {
+    //   test("Logging in with invalid credentials - Invalid email", async () => {
         
-        // Actual login of Salseforce trial
-        await loginPage.login_Salesforce(
-          jsonData.loggingIn.login.invalidEmail,
-          process.env.SALESFORCE_PASSWORD
-         );
+    //     // Actual login of Salseforce trial
+    //     await loginPage.login_Salesforce(
+    //       jsonData.loggingIn.login.invalidEmail,
+    //       process.env.SALESFORCE_PASSWORD
+    //      );
     
-        // const error = page.locator('[id="error"]') //Please check your username and password. If you still can't log in, contact your Salesforce administrator.
+    //     // const error = page.locator('[id="error"]') //Please check your username and password. If you still can't log in, contact your Salesforce administrator.
     
-        // await expect(error).toHaveText(
-        //   jsonData.loggingIn.output.loginError
-        // )
+    //     // await expect(error).toHaveText(
+    //     //   jsonData.loggingIn.output.loginError
+    //     // )
     
-      });
+    //   });
 
 
 });
