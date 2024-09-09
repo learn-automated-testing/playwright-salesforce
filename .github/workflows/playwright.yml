@@ -1,31 +1,31 @@
-name: Playwright Tests
+# name: Playwright Tests
 
-on: [push]
+# on: [push]
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    environment: test
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     environment: test
 
-    steps:
-      - uses: actions/checkout@v4
+#     steps:
+#       - uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: '22'
 
-      - name: Install dependencies
-        run: npm install
+#       - name: Install dependencies
+#         run: npm install
 
-      - name: Install playwright browsers
-        run: npx playwright install
+#       - name: Install playwright browsers
+#         run: npx playwright install
         
-      - name: Run create account.spec.js file
-        # env:
-          # SALESFORCE_USERNAME: ${{ secrets.SALESFORCE_USERNAME }}
-          # SALESFORCE_PASSWORD: ${{ secrets.SALESFORCE_PASSWORD }}
-        run: npm run login-sf --debug
+#       - name: Run create account.spec.js file
+#         # env:
+#           # SALESFORCE_USERNAME: ${{ secrets.SALESFORCE_USERNAME }}
+#           # SALESFORCE_PASSWORD: ${{ secrets.SALESFORCE_PASSWORD }}
+#         run: npm run login-sf --debug
 
 
       # - name: Run Postman Script to Remove Accounts
@@ -33,3 +33,32 @@ jobs:
       #     SF_CLIENT_ID: ${{ secrets.SF_CLIENT_ID }}
       #     SF_CLIENT_SECRET: ${{ secrets.SF_CLIENT_SECRET }}
       #   run: node ./tests/postman/removeaccounts.js
+
+
+name: Playwright Tests
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Run Playwright tests
+      run: npm run login-sf --debug
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
