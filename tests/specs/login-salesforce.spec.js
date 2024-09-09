@@ -41,8 +41,8 @@ test.describe('Login functionality', ()=> {
         // await expect(page).toHaveTitle(/Inloggen/);
     
         await loginPage.login_Salesforce(
-            // process.env.SALESFORCE_USERNAME,
-            // process.env.SALESFORCE_PASSWORD
+            process.env.SALESFORCE_USERNAME,
+            process.env.SALESFORCE_PASSWORD
         );
     
         // Expect a title "to contain" a substring.
