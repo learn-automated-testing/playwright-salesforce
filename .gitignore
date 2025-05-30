@@ -4,3 +4,4 @@
 /blob-report/
 /playwright/.cache/
 .env
+server.key
